@@ -21,13 +21,19 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
         if (rb.linearVelocity.z < maxSpeed)
-            rb.AddForce(0 , 0 , forwardforce);
+            rb.AddForce(transform.InverseTransformDirection(Vector3.forward) * forwardforce * Time.deltaTime);
 
         if (Input.GetKey(KeyCode.A))
-            rb.AddForce(-sideForce, 0, 0);
+        {
+            rb.AddForce(transform.InverseTransformDirection(Vector3.left) * sideForce * Time.deltaTime);
+        }
 
         if (Input.GetKey(KeyCode.D))
-            rb.AddForce(sideForce, 0, 0);
+        {
+            rb.AddForce(transform.InverseTransformDirection(Vector3.right) * sideForce * Time.deltaTime);
+
+        }
     }
 }
