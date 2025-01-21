@@ -6,7 +6,9 @@ public class PlayerMovement : MonoBehaviour
     private Rigidbody rb;
 
     [SerializeField]
-    private float maxSpeed;
+    private float maxForwardSpeed;
+    [SerializeField]
+    private float maxHorizontalSpeed;
     [SerializeField]
     private float sideForce;
     [SerializeField]
@@ -21,19 +23,26 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        ApplyForwardForce();
+        HorizontalMovement();
+    }
 
-        if (rb.linearVelocity.z < maxSpeed)
-            rb.AddForce(transform.InverseTransformDirection(Vector3.forward) * forwardforce * Time.deltaTime);
+    private void ApplyForwardForce()
+    {
+        if (rb.linearVelocity.magnitude < maxForwardSpeed)
+            rb.AddForce(transform.TransformDirection(Vector3.forward) * forwardforce * Time.deltaTime);
+    }
 
-        if (Input.GetKey(KeyCode.A))
+    private void HorizontalMovement()
+    {
+            if (Input.GetKey(KeyCode.A))
         {
-            rb.AddForce(transform.InverseTransformDirection(Vector3.left) * sideForce * Time.deltaTime);
+            rb.AddForce(transform.TransformDirection(Vector3.left) * sideForce * Time.deltaTime);
         }
 
         if (Input.GetKey(KeyCode.D))
         {
-            rb.AddForce(transform.InverseTransformDirection(Vector3.right) * sideForce * Time.deltaTime);
-
+            rb.AddForce(transform.TransformDirection(Vector3.right) * sideForce * Time.deltaTime);
         }
     }
 }

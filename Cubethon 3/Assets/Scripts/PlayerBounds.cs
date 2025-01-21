@@ -1,17 +1,20 @@
+using System;
 using UnityEngine;
 
 public class PlayerBounds : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
-
+    [SerializeField]
+    private float verticalBounds;
+    [SerializeField] 
+    private float horizontalBounds;
     // Update is called once per frame
     void Update()
     {
-        if (transform.position.y < -100f)
+        if (Mathf.Abs(transform.position.y) > verticalBounds)
+        {
+            GameManager.instance.ResetLevel(1.5f);
+        }
+        if (MathF.Abs(transform.position.x) > horizontalBounds)
         {
             GameManager.instance.ResetLevel(1.5f);
         }
